@@ -1,5 +1,6 @@
 package cz.krutsche.songbook
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -13,6 +14,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 
 class MainActivity : ComponentActivity() {
+    @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -21,11 +23,17 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    var id by remember { mutableStateOf("loading")}
+                    var songs by remember { mutableStateOf(listOf<Song>()) }
                     LaunchedEffect(true) {
-                        id = Greeting().getSongs()
+                        songs = Greeting().getSongs()
                     }
-                    Text(text = id)
+                    Scaffold(
+                        topBar = { TopAppBar(title = { Text("Worship songs") }) },
+                        bottomBar = { BottomBar() }
+                    ) {
+                        if (songs.isEmpty()) CircularProgressIndicator()
+                        else SongList(songs = songs)
+                    }
                 }
             }
         }

@@ -6,6 +6,6 @@ import kotlinx.serialization.Serializable
 data class Song(
     val name: String,
     val number: Int,
-    val withChords: String,
+    val withChords: String = "",
     val withoutChords: String
 )

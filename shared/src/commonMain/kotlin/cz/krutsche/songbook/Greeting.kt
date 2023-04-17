@@ -5,22 +5,27 @@ import dev.gitlive.firebase.auth.auth
 import dev.gitlive.firebase.firestore.firestore
 import dev.gitlive.firebase.firestore.orderBy
 import dev.gitlive.firebase.firestore.where
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 
+@OptIn(DelicateCoroutinesApi::class)
 class Greeting {
-    private val platform: Platform = getPlatform()
+    private val loginDeferred: Deferred<Any> = GlobalScope.async {
+        Firebase.auth.signInAnonymously()
+    }
 
-    suspend fun getSongs(): String {
-        val id = Firebase.auth.signInAnonymously().user?.uid ?: "no id"
+    suspend fun getSongs(): List<Song> {
+        loginDeferred.await()
         val collection = Firebase.firestore.collection("songs")
         val songs = collection
             .where("checkRequired", false)
-            .orderBy("number").get().documents
-        return id
-    }
-
-    fun greet(): String {
-//        db.collection("cities").document("LA").set(City.serializer(), city, encodeDefaults = true)
-
-        return "Hello, ${platform.name}!"
+            .orderBy("number")
+            .get()
+            .documents
+        return songs.map {
+            it.data(Song.serializer())
+        }
     }
 }
