@@ -14,11 +14,10 @@ extension ContentView {
     class ViewModel: ObservableObject {
         @Published var id : String = "loading"
         init() {
-            Greeting().getSongs { id, error  in
-                if(id != nil) {
-                    DispatchQueue.main.async {
-                        self.id = id!
-                    }
+            let id: String = ""
+            if(id != nil) {
+                DispatchQueue.main.async {
+                    self.id = id
                 }
             }
         }

@@ -1,4 +1,7 @@
 val composeVersion = "1.4.1"
+val koinVersion = "3.4.0"
+val koinComposeVersion = "3.4.3"
+val navigationVersion = "2.5.3"
 
 plugins {
     id("com.android.application")
@@ -49,5 +52,8 @@ dependencies {
     implementation("androidx.compose.foundation:foundation:$composeVersion")
     implementation("androidx.compose.material:material:$composeVersion")
     implementation("androidx.activity:activity-compose:1.7.0")
+    implementation("io.insert-koin:koin-android:$koinVersion")
+    implementation("io.insert-koin:koin-androidx-compose:$koinComposeVersion")
+    implementation("androidx.navigation:navigation-compose:$navigationVersion")
     implementation(platform("com.google.firebase:firebase-bom:31.5.0"))
 }

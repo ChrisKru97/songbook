@@ -11,6 +11,12 @@ plugins {
     kotlin("plugin.serialization") version "1.8.20"
 }
 
+sqldelight {
+    database ("Database") {
+       packageName = "cz.krutsche.songbook"
+   }
+}
+
 kotlin {
     android {
         compilations.all {
@@ -40,6 +46,7 @@ kotlin {
                 implementation("dev.gitlive:firebase-firestore:$firebaseVersion")
                 implementation("dev.gitlive:firebase-auth:$firebaseVersion")
                 implementation("com.squareup.sqldelight:runtime:$sqlDelightVersion")
+                implementation("com.squareup.sqldelight:coroutines-extensions:$sqlDelightVersion")
             }
         }
         val commonTest by getting {

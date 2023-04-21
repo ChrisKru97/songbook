@@ -1,0 +1,29 @@
+CREATE TABLE song (
+   name TEXT NOT NULL,
+   number INTEGER NOT NULL PRIMARY KEY,
+   withChords TEXT,
+   withoutChords TEXT NOT NULL,
+   favorite INTEGER AS Short
+);
+
+listAll:
+SELECT *
+FROM song;
+
+add:
+INSERT INTO song (name, number, withChords, withoutChords)
+VALUES ?;
+
+updateFavorite:
+UPDATE song
+SET favorite=?
+WHERE number=?;
+
+songCount:
+SELECT COUNT(*)
+FROM song;
+
+getSong:
+SELECT *
+FROM song
+WHERE number = ?;
