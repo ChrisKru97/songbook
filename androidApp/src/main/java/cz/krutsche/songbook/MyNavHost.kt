@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import cz.krutsche.songbook.screens.Favorites
+import cz.krutsche.songbook.screens.History
 import cz.krutsche.songbook.screens.Home
 import cz.krutsche.songbook.screens.Settings
 import cz.krutsche.songbook.screens.Song
@@ -19,10 +20,11 @@ fun MyNavHost() {
         composable("Favorites") { Favorites(navController) }
         composable(
             "Song/{songNumber}",
-            arguments = listOf(navArgument("songNumber") { type = NavType.LongType })
+            arguments = listOf(navArgument("songNumber") { type = NavType.IntType })
         ) {
-            Song(navController, it.arguments?.getLong("songNumber"))
+            Song(navController, it.arguments?.getInt("songNumber"))
         }
+        composable("History") { History(navController) }
         composable("Settings") { Settings(navController) }
     }
 }

@@ -19,9 +19,9 @@ interface SongRepository {
     suspend fun fetchSongs()
     fun searchSongs(text: String): List<Song>
     fun listSongs(): Flow<List<Song>>
-    fun setFavorite(number: Long, nextValue: Boolean)
+    fun setFavorite(number: Int, nextValue: Boolean)
     suspend fun initialize()
-    fun getSong(number: Long): Flow<Song?>
+    fun getSong(number: Int): Flow<Song?>
     fun listFavorites(): Flow<List<Song>>
 }
 
@@ -56,7 +56,7 @@ class SongRepositoryImpl(private val db: Database) : SongRepository {
         }
     }
 
-    override fun setFavorite(number: Long, nextValue: Boolean) =
+    override fun setFavorite(number: Int, nextValue: Boolean) =
         db.songQueries.updateFavorite(number = number, favorite = if (nextValue) 1 else 0)
 
     override fun searchSongs(text: String): List<Song> {
@@ -66,7 +66,7 @@ class SongRepositoryImpl(private val db: Database) : SongRepository {
     override fun listSongs(): Flow<List<Song>> =
         db.songQueries.listAll().asFlow().mapToList()
 
-    override fun getSong(number: Long) =
+    override fun getSong(number: Int) =
         db.songQueries.getSong(number).asFlow().mapToOneOrNull()
 
     override fun listFavorites(): Flow<List<Song>> =

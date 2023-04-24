@@ -15,24 +15,37 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import cz.krutsche.songbook.HistoryRepository
 import cz.krutsche.songbook.MR
+import cz.krutsche.songbook.SearchRepository
 import cz.krutsche.songbook.SongRepository
+import cz.krutsche.songbook.sqldelight.Song
+import cz.krutsche.songbook.sqldelight.List as DbList
 import org.koin.compose.koinInject
 
 enum class ListType {
     All,
     Search,
     Favorite,
-//    History
+    History
 }
 
 @Composable
 fun SongList(navController: NavController, listType: ListType = ListType.All) {
-    val songRepository = koinInject<SongRepository>()
+    val historyRepository = koinInject<HistoryRepository>()
+
     val songs = when (listType) {
-        ListType.All -> songRepository.listSongs().collectAsState(initial = listOf()).value
-        ListType.Favorite -> songRepository.listFavorites().collectAsState(initial = listOf()).value
-        ListType.Search -> songRepository.listSongs().collectAsState(initial = listOf()).value
+        ListType.All -> koinInject<SongRepository>().listSongs()
+            .collectAsState(initial = listOf()).value
+
+        ListType.Favorite -> koinInject<SongRepository>().listFavorites()
+            .collectAsState(initial = listOf()).value
+
+        ListType.Search -> koinInject<SearchRepository>().listSearchedSongs()
+            .collectAsState(initial = listOf()).value
+
+        ListType.History -> historyRepository.listSongs()
+            .collectAsState(initial = listOf()).value
     }
 
     if (songs.isEmpty())
@@ -46,12 +59,22 @@ fun SongList(navController: NavController, listType: ListType = ListType.All) {
                 )
         }
     else
-        LazyColumn {
+        LazyColumn(reverseLayout = listType == ListType.History) {
             items(songs) {
-                SongItem(it) {
-                    navController.navigate("Song/${it.number}") {
+                val number = when (it) {
+                    is Song -> it.number
+                    is DbList -> it.number
+                    else -> 1
+                }
+                val onClick = {
+                    historyRepository.addToHistory(number)
+                    navController.navigate("Song/${number}") {
                         launchSingleTop = true
                     }
+                }
+                when (it) {
+                    is DbList -> HistoryItem(it, onClick)
+                    is Song -> SongItem(it, onClick)
                 }
             }
         }

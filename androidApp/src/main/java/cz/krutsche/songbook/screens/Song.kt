@@ -14,10 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import cz.krutsche.songbook.components.FavoriteButton
 import cz.krutsche.songbook.components.song.SongBody
@@ -26,7 +23,7 @@ import org.koin.compose.koinInject
 
 @Composable
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
-fun Song(navController: NavController, songNumber: Long?) {
+fun Song(navController: NavController, songNumber: Int?) {
     val songRepository = koinInject<SongRepository>()
 
     if (songNumber == null) {
@@ -39,13 +36,7 @@ fun Song(navController: NavController, songNumber: Long?) {
     Scaffold(
         topBar = {
             TopAppBar(title = {
-                Text(
-                    song.name,
-                    style = TextStyle(
-                        fontWeight = FontWeight.SemiBold,
-                        fontSize = if (song.name.length > 50) 20.sp else if (song.name.length > 40) 24.sp else 28.sp
-                    )
-                )
+                Text(song.name)
             }, actions = {
                 FavoriteButton(
                     number = song.number,

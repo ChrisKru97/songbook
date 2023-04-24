@@ -18,7 +18,7 @@ import org.koin.compose.koinInject
 @Composable
 fun FavoriteButton(
     modifier: Modifier = Modifier,
-    number: Long,
+    number: Int,
     favorite: Boolean,
     defaultColor: Color = Color.Black,
 ) {

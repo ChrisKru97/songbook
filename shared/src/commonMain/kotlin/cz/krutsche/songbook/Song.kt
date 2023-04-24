@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class SerializableSong(
     val name: String,
-    val number: Long,
+    val number: Int,
     val withChords: String?,
     val withoutChords: String,
     val favorite: Boolean = false

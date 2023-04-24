@@ -1,6 +1,6 @@
 CREATE TABLE song (
    name TEXT NOT NULL,
-   number INTEGER NOT NULL PRIMARY KEY,
+   number INTEGER AS Int NOT NULL PRIMARY KEY,
    withChords TEXT,
    withoutChords TEXT NOT NULL,
    favorite INTEGER AS Short

@@ -1,0 +1,14 @@
+CREATE TABLE history (
+    songNumber INTEGER AS Int NOT NULL UNIQUE,
+    dateTime INTEGER NOT NULL,
+    FOREIGN KEY (songNumber) REFERENCES song(number)
+);
+
+add:
+INSERT OR REPLACE INTO history(songNumber, dateTime)
+VALUES (?, ?);
+
+list:
+SELECT * FROM history
+JOIN song
+ON song.number = history.songNumber;

@@ -1,19 +1,20 @@
 package cz.krutsche.songbook
 
-import cz.krutsche.songbook.sqldelight.Song
+import com.squareup.sqldelight.runtime.coroutines.asFlow
+import com.squareup.sqldelight.runtime.coroutines.mapToList
+import cz.krutsche.songbook.sqldelight.List as DbList
 import kotlinx.coroutines.flow.Flow
+import kotlinx.datetime.Clock
 
 interface HistoryRepository {
-    fun listSongs(): Flow<List<Song>>
-    fun addToHistory(songNumber: Number)
+    fun listSongs(): Flow<List<DbList>>
+    fun addToHistory(songNumber: Int)
 }
 
 class HistoryRepositoryImpl(private val db: Database) : HistoryRepository {
-    override fun listSongs(): Flow<List<Song>> {
-        TODO("Not yet implemented")
-    }
+    override fun listSongs(): Flow<List<DbList>> =
+        db.historyQueries.list().asFlow().mapToList()
 
-    override fun addToHistory(songNumber: Number) {
-        TODO("Not yet implemented")
-    }
+    override fun addToHistory(songNumber: Int) =
+        db.historyQueries.add(songNumber, Clock.System.now().epochSeconds)
 }
