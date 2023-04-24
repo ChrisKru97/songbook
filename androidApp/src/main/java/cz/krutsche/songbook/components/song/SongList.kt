@@ -20,6 +20,7 @@ import cz.krutsche.songbook.MR
 import cz.krutsche.songbook.SearchRepository
 import cz.krutsche.songbook.SongRepository
 import cz.krutsche.songbook.sqldelight.Song
+import kotlinx.coroutines.flow.flowOf
 import cz.krutsche.songbook.sqldelight.List as DbList
 import org.koin.compose.koinInject
 
@@ -42,7 +43,7 @@ fun SongList(navController: NavController, listType: ListType = ListType.All) {
             .collectAsState(initial = listOf()).value
 
         ListType.Search -> koinInject<SearchRepository>().listSearchedSongs()
-            .collectAsState(initial = listOf()).value
+            .collectAsState(initial = flowOf(listOf())).value.collectAsState(initial = listOf()).value
 
         ListType.History -> historyRepository.listSongs()
             .collectAsState(initial = listOf()).value

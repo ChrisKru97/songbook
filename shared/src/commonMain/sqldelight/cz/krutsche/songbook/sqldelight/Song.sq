@@ -1,8 +1,10 @@
 CREATE TABLE song (
    name TEXT NOT NULL,
+   cleanName TEXT NOT NULL,
    number INTEGER AS Int NOT NULL PRIMARY KEY,
    withChords TEXT,
    withoutChords TEXT NOT NULL,
+   cleanText TEXT NOT NULL,
    favorite INTEGER AS Short
 );
 
@@ -11,7 +13,7 @@ SELECT *
 FROM song;
 
 add:
-INSERT OR REPLACE INTO song (name, number, withChords, withoutChords)
+INSERT OR REPLACE INTO song (name, cleanName, number, withChords, withoutChords, cleanText)
 VALUES ?;
 
 updateFavorite:
@@ -32,3 +34,10 @@ listFavorites:
 SELECT *
 FROM song
 WHERE favorite == 1;
+
+search:
+SELECT *
+FROM song
+WHERE LOWER(cleanName) LIKE :searchWord
+OR LOWER(cleanText) LIKE :searchWord
+OR LOWER(number) LIKE :searchWord;

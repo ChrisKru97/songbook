@@ -6,6 +6,7 @@ val coroutinesVersion = "1.6.4"
 val settingsVersion = "1.0.0"
 val intlVersion = "0.21.2"
 val dateTimeVersion = "0.4.0"
+val normalizeVersion = "1.0.5"
 
 plugins {
     kotlin("multiplatform")
@@ -57,6 +58,7 @@ kotlin {
                 implementation("com.squareup.sqldelight:coroutines-extensions:$sqlDelightVersion")
                 implementation("com.russhwolf:multiplatform-settings:$settingsVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:$dateTimeVersion")
+                implementation("com.doist.x:normalize:$normalizeVersion")
                 api("dev.icerock.moko:resources:$intlVersion")
             }
         }

@@ -21,6 +21,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,8 +34,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import cz.krutsche.songbook.MR
+import cz.krutsche.songbook.SearchRepository
 import cz.krutsche.songbook.components.BottomBar
+import cz.krutsche.songbook.components.song.ListType
 import cz.krutsche.songbook.components.song.SongList
+import kotlinx.coroutines.launch
+import org.koin.compose.koinInject
 
 @Composable
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -57,13 +62,17 @@ fun Home(navController: NavController) {
                         style = TextStyle(color = Color.White, fontSize = 28.sp),
                     )
                     if (searchBarShown) {
+                        val searchRepository = koinInject<SearchRepository>()
+                        val coroutineScope = rememberCoroutineScope()
                         val focusRequester = remember { FocusRequester() }
                         var searchValue by remember { mutableStateOf("") }
                         OutlinedTextField(
                             value = searchValue,
                             onValueChange = {
                                 searchValue = it
-
+                                coroutineScope.launch {
+                                    searchRepository.searchSong(it)
+                                }
                             },
                             leadingIcon = {
                                 Icon(
@@ -92,6 +101,6 @@ fun Home(navController: NavController) {
         },
         bottomBar = { BottomBar(navController) { searchBarShown = !searchBarShown } }
     ) {
-        SongList(navController)
+        SongList(navController, if (searchBarShown) ListType.Search else ListType.All)
     }
 }
