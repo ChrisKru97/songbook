@@ -12,6 +12,7 @@ fun appModule(driverFactory: DriverFactory) = module {
         Database(driver)
     }
     single<SongRepository> { SongRepositoryImpl(get()) }
+    single<SettingsRepository> { SettingsRepositoryImpl() }
 }
 
 @OptIn(DelicateCoroutinesApi::class)

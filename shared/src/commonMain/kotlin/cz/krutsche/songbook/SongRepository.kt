@@ -2,6 +2,7 @@ package cz.krutsche.songbook
 
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
+import com.squareup.sqldelight.runtime.coroutines.mapToOneOrNull
 import dev.gitlive.firebase.Firebase
 import dev.gitlive.firebase.auth.auth
 import dev.gitlive.firebase.firestore.firestore
@@ -15,12 +16,13 @@ import kotlinx.coroutines.flow.Flow
 import cz.krutsche.songbook.sqldelight.Song as DbSong
 
 interface SongRepository {
+    suspend fun fetchSongs()
     fun searchSongs(text: String): List<Song>
     fun listSongs(): Flow<List<DbSong>>
-    suspend fun updateSongs()
     fun setFavorite(number: Long, nextValue: Boolean)
     suspend fun initialize()
-    fun getSong(number: Long): DbSong?
+    fun getSong(number: Long): Flow<DbSong?>
+    fun listFavorites(): Flow<List<DbSong>>
 }
 
 @OptIn(DelicateCoroutinesApi::class)
@@ -40,20 +42,18 @@ class SongRepositoryImpl(private val db: Database) : SongRepository {
         }
     }
 
-    private suspend fun fetchSongs() {
+    override suspend fun fetchSongs() {
         val collection = Firebase.firestore.collection("songs")
         val songs = collection
             .where("checkRequired", false)
             .orderBy("number")
             .get()
             .documents
-        songs.forEach {
-            db.songQueries.add(songToDb(it.data(Song.serializer())))
+        db.songQueries.transaction {
+            songs.forEach {
+                db.songQueries.add(songToDb(it.data(Song.serializer())))
+            }
         }
-    }
-
-    override suspend fun updateSongs() {
-        fetchSongs()
     }
 
     override fun setFavorite(number: Long, nextValue: Boolean) =
@@ -67,5 +67,8 @@ class SongRepositoryImpl(private val db: Database) : SongRepository {
         db.songQueries.listAll().asFlow().mapToList()
 
     override fun getSong(number: Long) =
-        db.songQueries.getSong(number).executeAsOneOrNull()
+        db.songQueries.getSong(number).asFlow().mapToOneOrNull()
+
+    override fun listFavorites(): Flow<List<DbSong>> =
+        db.songQueries.listFavorites().asFlow().mapToList()
 }

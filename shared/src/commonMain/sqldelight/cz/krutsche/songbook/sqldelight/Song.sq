@@ -11,7 +11,7 @@ SELECT *
 FROM song;
 
 add:
-INSERT INTO song (name, number, withChords, withoutChords)
+INSERT OR REPLACE INTO song (name, number, withChords, withoutChords)
 VALUES ?;
 
 updateFavorite:
@@ -27,3 +27,8 @@ getSong:
 SELECT *
 FROM song
 WHERE number = ?;
+
+listFavorites:
+SELECT *
+FROM song
+WHERE favorite == 1;
