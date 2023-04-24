@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.Flow
 import cz.krutsche.songbook.sqldelight.Song
 
 interface SongRepository {
+    var songCount: Int?
     suspend fun fetchSongs()
     fun searchSongs(text: String): List<Song>
     fun listSongs(): Flow<List<Song>>
@@ -27,6 +28,8 @@ interface SongRepository {
 
 @OptIn(DelicateCoroutinesApi::class)
 class SongRepositoryImpl(private val db: Database) : SongRepository {
+    override var songCount: Int? = null
+
     private val loginDeferred: Deferred<Any> = GlobalScope.async {
         Firebase.auth.signInAnonymously()
     }
@@ -35,8 +38,8 @@ class SongRepositoryImpl(private val db: Database) : SongRepository {
         val query = db.songQueries.songCount().execute()
         val next = query.next()
         if (!next) return
-        val count = query.getLong(0)?.toInt()
-        if (count == null || count == 0) {
+        songCount = query.getLong(0)?.toInt()
+        if (songCount == null || songCount == 0) {
             loginDeferred.await()
             fetchSongs()
         }

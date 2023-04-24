@@ -8,6 +8,17 @@
     <string name="no_songs_info">Żadne pieśni</string>
 
     <string name="update_button">Zaktualizuj pieśni</string>
-    <string name="language">Język</string>
     <string name="chords">Pokaż akordy</string>
+
+    <string name="font_size">Wielkość tekstu:</string>
+    <string name="song_placeholder">Tekst piosenki ...</string>
+
+    <string name="language">Język</string>
+    <string name="language_en">Angielski</string>
+    <string name="language_cs">Czeski</string>
+    <string name="language_pl">Polski</string>
+
+    <string name="song_number_input">Wpisz numer piosenki:</string>
+    <string name="button_open">Otwórz</string>
+    <string name="button_close">Pomiń</string>
 </resources>

@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import cz.krutsche.songbook.SettingsRepository
 import cz.krutsche.songbook.components.FavoriteButton
 import cz.krutsche.songbook.components.song.SongBody
 import cz.krutsche.songbook.SongRepository
@@ -36,7 +37,7 @@ fun Song(navController: NavController, songNumber: Int?) {
     Scaffold(
         topBar = {
             TopAppBar(title = {
-                Text(song.name)
+                Text("${song.number}. ${song.name}")
             }, actions = {
                 FavoriteButton(
                     number = song.number,
@@ -53,6 +54,7 @@ fun Song(navController: NavController, songNumber: Int?) {
             })
         },
     ) {
-        SongBody(song.withoutChords)
+        val showChords = koinInject<SettingsRepository>().showChords
+        SongBody(if (showChords && song.withChords != null) song.withChords as String else song.withoutChords)
     }
 }

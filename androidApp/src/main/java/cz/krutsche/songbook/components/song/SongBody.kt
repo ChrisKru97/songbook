@@ -15,13 +15,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import cz.krutsche.songbook.SettingsRepository
+import org.koin.compose.koinInject
 
 @Composable
 fun SongBody(songText: String) {
-    var fontSize by remember { mutableStateOf(20.sp) }
+    val settingsRepository = koinInject<SettingsRepository>()
+    var fontSize by remember { mutableStateOf(settingsRepository.fontSize.sp) }
     val state = rememberTransformableState { zoom, _, _ ->
         fontSize *= zoom
     }
+
     Box(
         modifier = Modifier
             .padding(8.dp)

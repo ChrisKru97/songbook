@@ -8,6 +8,17 @@
     <string name="no_songs_info">Žádné písně</string>
 
     <string name="update_button">Aktualizuj písně</string>
-    <string name="language">Jazyk</string>
     <string name="chords">Zobraz akordy</string>
+
+    <string name="font_size">Velikost textu:</string>
+    <string name="song_placeholder">Text písně ...</string>
+
+    <string name="language">Jazyk</string>
+    <string name="language_en">Anglicky</string>
+    <string name="language_cs">Česky</string>
+    <string name="language_pl">Polsky</string>
+
+    <string name="song_number_input">Zadej číslo písně:</string>
+    <string name="button_open">Otevřít</string>
+    <string name="button_close">Zavřít</string>
 </resources>

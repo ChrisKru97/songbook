@@ -57,6 +57,7 @@ kotlin {
                 implementation("com.squareup.sqldelight:runtime:$sqlDelightVersion")
                 implementation("com.squareup.sqldelight:coroutines-extensions:$sqlDelightVersion")
                 implementation("com.russhwolf:multiplatform-settings:$settingsVersion")
+                implementation("com.russhwolf:multiplatform-settings-no-arg:$settingsVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:$dateTimeVersion")
                 implementation("com.doist.x:normalize:$normalizeVersion")
                 api("dev.icerock.moko:resources:$intlVersion")

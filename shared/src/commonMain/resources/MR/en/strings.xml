@@ -8,6 +8,17 @@
     <string name="no_songs_info">There are no songs</string>
 
     <string name="update_button">Update songs</string>
-    <string name="language">Language</string>
     <string name="chords">Show chords</string>
+
+    <string name="font_size">Font size:</string>
+    <string name="song_placeholder">Song text ...</string>
+
+    <string name="language">Language</string>
+    <string name="language_en">English</string>
+    <string name="language_cs">Czech</string>
+    <string name="language_pl">Polish</string>
+
+    <string name="song_number_input">Enter song number:</string>
+    <string name="button_open">Open</string>
+    <string name="button_close">Close</string>
 </resources>
