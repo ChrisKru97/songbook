@@ -1,10 +1,10 @@
 package cz.krutsche.songbook
 
-import cz.krutsche.songbook.sqldelight.Song as DbSong
+import cz.krutsche.songbook.sqldelight.Song
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Song(
+data class SerializableSong(
     val name: String,
     val number: Long,
     val withChords: String?,
@@ -12,7 +12,7 @@ data class Song(
     val favorite: Boolean = false
 )
 
-fun songToDb(song: Song) = DbSong(
+fun songToDb(song: SerializableSong) = Song(
     name = song.name,
     number = song.number,
     withChords = song.withChords,

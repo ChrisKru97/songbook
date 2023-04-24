@@ -4,6 +4,7 @@ interface SettingsRepository {
     fun setFontSize(fontSize: Int)
     fun setTextAlignment(textAlignment: String)
     fun setDarkMode(darkMode: String)
+    fun setLanguage(language: String)
 }
 
 class SettingsRepositoryImpl : SettingsRepository {
@@ -18,6 +19,10 @@ class SettingsRepositoryImpl : SettingsRepository {
     }
 
     override fun setDarkMode(darkMode: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun setLanguage(language: String) {
         TODO("Not yet implemented")
     }
 }

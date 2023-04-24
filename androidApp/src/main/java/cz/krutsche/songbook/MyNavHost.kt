@@ -21,8 +21,8 @@ fun MyNavHost() {
             "Song/{songNumber}",
             arguments = listOf(navArgument("songNumber") { type = NavType.LongType })
         ) {
-            Song(it.arguments?.getLong("songNumber"))
+            Song(navController, it.arguments?.getLong("songNumber"))
         }
-        composable("Settings") { Settings() }
+        composable("Settings") { Settings(navController) }
     }
 }

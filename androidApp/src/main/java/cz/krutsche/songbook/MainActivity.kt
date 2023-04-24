@@ -9,6 +9,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         val driverFactory = DriverFactory(context = baseContext)
         initKoin(driverFactory)
+        this.setTitle(MR.strings.app_title.resourceId)
         setContent {
             MyApplicationTheme {
                 MyNavHost()

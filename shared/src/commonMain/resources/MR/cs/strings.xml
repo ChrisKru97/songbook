@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+    <string name="app_title">Zpěvník chval</string>
+    <string name="favorites_title">Oblíbené</string>
+    <string name="history_title">Poslední</string>
+    <string name="settings_title">Nastavení</string>
+
+    <string name="no_songs_info">Žádné písně</string>
+
+    <string name="update_button">Aktualizuj písně</string>
+    <string name="language">Jazyk</string>
+    <string name="chords">Zobraz akordy</string>
+</resources>

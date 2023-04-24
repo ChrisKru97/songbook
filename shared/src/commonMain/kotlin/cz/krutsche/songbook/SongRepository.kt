@@ -13,16 +13,16 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
-import cz.krutsche.songbook.sqldelight.Song as DbSong
+import cz.krutsche.songbook.sqldelight.Song
 
 interface SongRepository {
     suspend fun fetchSongs()
     fun searchSongs(text: String): List<Song>
-    fun listSongs(): Flow<List<DbSong>>
+    fun listSongs(): Flow<List<Song>>
     fun setFavorite(number: Long, nextValue: Boolean)
     suspend fun initialize()
-    fun getSong(number: Long): Flow<DbSong?>
-    fun listFavorites(): Flow<List<DbSong>>
+    fun getSong(number: Long): Flow<Song?>
+    fun listFavorites(): Flow<List<Song>>
 }
 
 @OptIn(DelicateCoroutinesApi::class)
@@ -51,7 +51,7 @@ class SongRepositoryImpl(private val db: Database) : SongRepository {
             .documents
         db.songQueries.transaction {
             songs.forEach {
-                db.songQueries.add(songToDb(it.data(Song.serializer())))
+                db.songQueries.add(songToDb(it.data(SerializableSong.serializer())))
             }
         }
     }
@@ -63,12 +63,12 @@ class SongRepositoryImpl(private val db: Database) : SongRepository {
         return listOf()
     }
 
-    override fun listSongs(): Flow<List<DbSong>> =
+    override fun listSongs(): Flow<List<Song>> =
         db.songQueries.listAll().asFlow().mapToList()
 
     override fun getSong(number: Long) =
         db.songQueries.getSong(number).asFlow().mapToOneOrNull()
 
-    override fun listFavorites(): Flow<List<DbSong>> =
+    override fun listFavorites(): Flow<List<Song>> =
         db.songQueries.listFavorites().asFlow().mapToList()
 }

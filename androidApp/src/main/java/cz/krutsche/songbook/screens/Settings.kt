@@ -9,10 +9,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Button
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Switch
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -21,26 +25,35 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import cz.krutsche.songbook.MR
 import cz.krutsche.songbook.SongRepository
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun Settings() {
+fun Settings(navController: NavController) {
     val songRepository = koinInject<SongRepository>()
     val composableScope = rememberCoroutineScope()
 
     Scaffold(topBar = {
         TopAppBar(title = {
             Text(
-                "Settings",
+                stringResource(MR.strings.settings_title.resourceId),
                 style = TextStyle(fontWeight = FontWeight.SemiBold, fontSize = 28.sp)
             )
+        }, navigationIcon = {
+            IconButton(onClick = {
+                navController.navigateUp()
+            }) {
+                Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+            }
         })
     }) {
         Column(
@@ -52,7 +65,10 @@ fun Settings() {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text("Dark mode", style = TextStyle(fontSize = 20.sp))
+                Text(
+                    "Dark mode",
+                    style = TextStyle(fontSize = 20.sp)
+                )
                 Switch(checked = false, onCheckedChange = {})
             }
             Row(
@@ -60,7 +76,10 @@ fun Settings() {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text("Chords", style = TextStyle(fontSize = 20.sp))
+                Text(
+                    stringResource(MR.strings.chords.resourceId),
+                    style = TextStyle(fontSize = 20.sp)
+                )
                 Switch(checked = false, onCheckedChange = {})
             }
             var loading by remember { mutableStateOf(false) }
@@ -77,7 +96,10 @@ fun Settings() {
                         horizontal = 32.dp
                     )
                 ) {
-                    Text("Refresh songs", style = TextStyle(fontSize = 24.sp))
+                    Text(
+                        stringResource(MR.strings.update_button.resourceId),
+                        style = TextStyle(fontSize = 24.sp)
+                    )
                     if (loading)
                         CircularProgressIndicator(
                             modifier = Modifier

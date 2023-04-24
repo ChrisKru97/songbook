@@ -3,18 +3,25 @@ val sqlDelightVersion = "1.5.5"
 val firebaseVersion = "1.8.0"
 val serializationVersion = "1.5.0"
 val coroutinesVersion = "1.6.4"
+val settingsVersion = "1.0.0"
+val intlVersion = "0.21.2"
 
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
     id("com.squareup.sqldelight")
     kotlin("plugin.serialization") version "1.8.20"
+    id("dev.icerock.mobile.multiplatform-resources")
 }
 
 sqldelight {
     database ("Database") {
        packageName = "cz.krutsche.songbook"
    }
+}
+
+multiplatformResources {
+    multiplatformResourcesPackage = "cz.krutsche.songbook"
 }
 
 kotlin {
@@ -47,6 +54,8 @@ kotlin {
                 implementation("dev.gitlive:firebase-auth:$firebaseVersion")
                 implementation("com.squareup.sqldelight:runtime:$sqlDelightVersion")
                 implementation("com.squareup.sqldelight:coroutines-extensions:$sqlDelightVersion")
+                implementation("com.russhwolf:multiplatform-settings:$settingsVersion")
+                api("dev.icerock.moko:resources:$intlVersion")
             }
         }
         val commonTest by getting {

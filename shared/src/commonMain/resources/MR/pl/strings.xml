@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+    <string name="app_title">Pieśni uwielbienia</string>
+    <string name="favorites_title">Ulubione</string>
+    <string name="history_title">Historia</string>
+    <string name="settings_title">Ustawienia</string>
+
+    <string name="no_songs_info">Żadne pieśni</string>
+
+    <string name="update_button">Zaktualizuj pieśni</string>
+    <string name="language">Język</string>
+    <string name="chords">Pokaż akordy</string>
+</resources>

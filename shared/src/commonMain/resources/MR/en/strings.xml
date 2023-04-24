@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+    <string name="app_title">Worship songs</string>
+    <string name="favorites_title">Favorite</string>
+    <string name="history_title">History</string>
+    <string name="settings_title">Settings</string>
+
+    <string name="no_songs_info">There are no songs</string>
+
+    <string name="update_button">Update songs</string>
+    <string name="language">Language</string>
+    <string name="chords">Show chords</string>
+</resources>

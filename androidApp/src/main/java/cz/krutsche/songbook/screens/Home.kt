@@ -27,10 +27,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import cz.krutsche.songbook.MR
 import cz.krutsche.songbook.components.BottomBar
 import cz.krutsche.songbook.components.song.SongList
 
@@ -51,7 +53,7 @@ fun Home(navController: NavController) {
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     Text(
-                        "Worship Songs",
+                        stringResource(MR.strings.app_title.resourceId),
                         style = TextStyle(color = Color.White, fontSize = 28.sp),
                     )
                     if (searchBarShown) {

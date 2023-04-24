@@ -13,6 +13,8 @@ fun appModule(driverFactory: DriverFactory) = module {
     }
     single<SongRepository> { SongRepositoryImpl(get()) }
     single<SettingsRepository> { SettingsRepositoryImpl() }
+    single<HistoryRepository> { HistoryRepositoryImpl(get()) }
+    single<SearchRepository> { SearchRepositoryImpl(get()) }
 }
 
 @OptIn(DelicateCoroutinesApi::class)
