@@ -10,7 +10,7 @@
     <string name="update_button">Zaktualizuj pieśni</string>
     <string name="chords">Pokaż akordy</string>
 
-    <string name="font_size">Wielkość tekstu:</string>
+    <string name="font_size">Wielkość tekstu</string>
     <string name="song_placeholder">Tekst piosenki ...</string>
 
     <string name="language">Język</string>
@@ -21,4 +21,13 @@
     <string name="song_number_input">Wpisz numer piosenki:</string>
     <string name="button_open">Otwórz</string>
     <string name="button_close">Pomiń</string>
+
+    <string name="theme">Motyw</string>
+    <string name="theme_dark">Ćmawy</string>
+    <string name="theme_light">Jasny</string>
+    <string name="theme_auto">Automatyczny</string>
+
+    <string name="alignment">Wyrównanie tekstu</string>
+    <string name="alignment_left">Wlewo</string>
+    <string name="alignment_center">Na środek</string>
 </resources>

@@ -10,7 +10,7 @@
     <string name="update_button">Update songs</string>
     <string name="chords">Show chords</string>
 
-    <string name="font_size">Font size:</string>
+    <string name="font_size">Font size</string>
     <string name="song_placeholder">Song text ...</string>
 
     <string name="language">Language</string>
@@ -21,4 +21,13 @@
     <string name="song_number_input">Enter song number:</string>
     <string name="button_open">Open</string>
     <string name="button_close">Close</string>
+
+    <string name="theme">Mode</string>
+    <string name="theme_dark">Dark</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_auto">Auto</string>
+
+    <string name="alignment">Text alignment</string>
+    <string name="alignment_left">Left</string>
+    <string name="alignment_center">Center</string>
 </resources>

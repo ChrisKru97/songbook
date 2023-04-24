@@ -13,9 +13,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cz.krutsche.songbook.SettingsRepository
+import cz.krutsche.songbook.TextAlignment as MyAlignment
 import org.koin.compose.koinInject
 
 @Composable
@@ -34,7 +36,10 @@ fun SongBody(songText: String) {
     ) {
         Text(
             songText,
-            style = TextStyle(fontSize = fontSize)
+            style = TextStyle(
+                fontSize = fontSize,
+                textAlign = if (settingsRepository.textAlignment == MyAlignment.Left) TextAlign.Left else TextAlign.Center
+            )
         )
     }
 }

@@ -77,7 +77,8 @@ fun Home(navController: NavController) {
                             leadingIcon = {
                                 Icon(
                                     Icons.Default.Search,
-                                    contentDescription = null
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colors.surface,
                                 )
                             },
                             modifier = Modifier
@@ -87,6 +88,7 @@ fun Home(navController: NavController) {
                             colors = TextFieldDefaults.outlinedTextFieldColors(
                                 backgroundColor = Color.White,
                                 focusedBorderColor = Color.Transparent,
+                                textColor = Color.Black,
                             )
                         )
 

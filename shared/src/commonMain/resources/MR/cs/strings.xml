@@ -10,7 +10,7 @@
     <string name="update_button">Aktualizuj písně</string>
     <string name="chords">Zobraz akordy</string>
 
-    <string name="font_size">Velikost textu:</string>
+    <string name="font_size">Velikost textu</string>
     <string name="song_placeholder">Text písně ...</string>
 
     <string name="language">Jazyk</string>
@@ -21,4 +21,13 @@
     <string name="song_number_input">Zadej číslo písně:</string>
     <string name="button_open">Otevřít</string>
     <string name="button_close">Zavřít</string>
+
+    <string name="theme">Režim</string>
+    <string name="theme_dark">Tmavý</string>
+    <string name="theme_light">Světlý</string>
+    <string name="theme_auto">Automaticky</string>
+
+    <string name="alignment">Zarování textu</string>
+    <string name="alignment_left">Na levo</string>
+    <string name="alignment_center">Na střed</string>
 </resources>

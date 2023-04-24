@@ -22,6 +22,7 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,8 +41,13 @@ import androidx.navigation.NavController
 import cz.krutsche.songbook.MR
 import cz.krutsche.songbook.SettingsRepository
 import cz.krutsche.songbook.SongRepository
+import cz.krutsche.songbook.TextAlignment
+import cz.krutsche.songbook.Theme
+import cz.krutsche.songbook.components.Option
+import cz.krutsche.songbook.components.Radio
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
+import java.util.Locale
 import kotlin.math.roundToInt
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -72,6 +78,94 @@ fun Settings(navController: NavController) {
                 fontWeight = FontWeight.SemiBold,
                 textDecoration = TextDecoration.Underline
             )
+
+            Column {
+                var textAlignment by remember { mutableStateOf(settingsRepository.textAlignment) }
+                Text(
+                    stringResource(MR.strings.alignment.resourceId),
+                    style = style
+                )
+                Radio(
+                    options = listOf(
+                        Option(
+                            TextAlignment.Left,
+                            stringResource(MR.strings.alignment_left.resourceId)
+                        ),
+                        Option(
+                            TextAlignment.Center,
+                            stringResource(MR.strings.alignment_center.resourceId)
+                        ),
+                    ),
+                    selected = textAlignment,
+                    onChange = {
+                        textAlignment = it
+                        settingsRepository.setTextAlignment(it)
+                    },
+                    modifier = Modifier.padding(top = 8.dp)
+                )
+            }
+
+            Divider()
+
+            Column {
+                val theme = settingsRepository.theme.collectAsState(initial = Theme.Auto).value
+                Text(
+                    stringResource(MR.strings.theme.resourceId),
+                    style = style
+                )
+                Radio(
+                    options = listOf(
+                        Option(
+                            Theme.Auto,
+                            stringResource(MR.strings.theme_auto.resourceId)
+                        ),
+                        Option(
+                            Theme.Dark,
+                            stringResource(MR.strings.theme_dark.resourceId)
+                        ),
+                        Option(
+                            Theme.Light,
+                            stringResource(MR.strings.theme_light.resourceId)
+                        )
+                    ),
+                    selected = theme,
+                    onChange = { settingsRepository.setTheme(it) },
+                    modifier = Modifier.padding(top = 8.dp)
+                )
+            }
+
+            Divider()
+
+            Column {
+                Text(
+                    stringResource(MR.strings.language.resourceId),
+                    style = style
+                )
+                val default = Locale.getDefault().language
+                val language =
+                    settingsRepository.language.collectAsState(initial = default).value ?: default
+                Radio(
+                    options = listOf(
+                        Option(
+                            "en",
+                            stringResource(MR.strings.language_en.resourceId)
+                        ),
+                        Option(
+                            "cs",
+                            stringResource(MR.strings.language_cs.resourceId)
+                        ),
+                        Option(
+                            "pl",
+                            stringResource(MR.strings.language_pl.resourceId)
+                        )
+                    ),
+                    selected = language,
+                    onChange = { settingsRepository.setLanguage(it) },
+                    modifier = Modifier.padding(top = 8.dp)
+                )
+            }
+
+            Divider()
 
             Column {
                 Text(

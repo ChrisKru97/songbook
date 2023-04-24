@@ -15,6 +15,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -49,9 +50,11 @@ import org.koin.compose.koinInject
 
 @Composable
 fun BottomBar(navController: NavController, toggleSearch: () -> Unit) {
+    val interactionSource = remember { MutableInteractionSource() }
     Row(
         modifier = Modifier
-            .background(Color.Black.copy(0.3f))
+            .background(MaterialTheme.colors.onBackground.copy(0.3f))
+            .clickable(indication = null, interactionSource = interactionSource) {}
             .padding(16.dp)
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween

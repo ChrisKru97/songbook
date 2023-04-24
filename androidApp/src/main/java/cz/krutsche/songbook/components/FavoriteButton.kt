@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
@@ -20,7 +21,7 @@ fun FavoriteButton(
     modifier: Modifier = Modifier,
     number: Int,
     favorite: Boolean,
-    defaultColor: Color = Color.Black,
+    defaultColor: Color = MaterialTheme.colors.onSurface
 ) {
     val songRepository = koinInject<SongRepository>()
     val interactionSource = remember { MutableInteractionSource() }

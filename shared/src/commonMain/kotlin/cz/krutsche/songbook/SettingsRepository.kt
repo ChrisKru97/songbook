@@ -1,7 +1,12 @@
 package cz.krutsche.songbook
 
-import com.russhwolf.settings.Settings
+import com.russhwolf.settings.ExperimentalSettingsApi
+import com.russhwolf.settings.ObservableSettings
+import com.russhwolf.settings.coroutines.getStringFlow
+import com.russhwolf.settings.coroutines.getStringOrNullFlow
 import com.russhwolf.settings.set
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 interface SettingsRepository {
     val fontSize: Int
@@ -10,10 +15,10 @@ interface SettingsRepository {
     fun setShowChords(showChords: Boolean)
     val textAlignment: TextAlignment
     fun setTextAlignment(textAlignment: TextAlignment)
-    val theme: Theme
+    val theme: Flow<Theme>
     fun setTheme(theme: Theme)
+    val language: Flow<String?>
     fun getLanguage(default: String): String
-    val language: String?
     fun setLanguage(language: String)
 }
 
@@ -24,7 +29,7 @@ const val THEME_KEY = "@theme"
 const val LANGUAGE_KEY = "@language"
 
 enum class TextAlignment {
-    Left, Right
+    Left, Center
 }
 
 enum class Theme {
@@ -33,8 +38,8 @@ enum class Theme {
 
 val AvailableLangs = listOf("cs", "en", "pl")
 
-class SettingsRepositoryImpl : SettingsRepository {
-    val settings: Settings = Settings()
+@OptIn(ExperimentalSettingsApi::class)
+class SettingsRepositoryImpl(val settings: ObservableSettings) : SettingsRepository {
 
     override val fontSize get() = settings.getInt(FONT_SIZE_KEY, 20)
 
@@ -57,15 +62,15 @@ class SettingsRepositoryImpl : SettingsRepository {
     override fun setTextAlignment(textAlignment: TextAlignment) =
         settings.set(TEXT_ALIGNMENT_KEY, textAlignment.name)
 
-    override val theme get() = Theme.valueOf(settings.getString(THEME_KEY, "Auto"))
+    override val theme = settings.getStringFlow(THEME_KEY, "Auto").map { Theme.valueOf(it) }
 
     override fun setTheme(theme: Theme) =
-        settings.set(TEXT_ALIGNMENT_KEY, textAlignment.name)
+        settings.set(THEME_KEY, theme.name)
 
+    override val language = settings.getStringOrNullFlow(LANGUAGE_KEY)
     override fun getLanguage(default: String) =
         settings.getString(LANGUAGE_KEY, if (AvailableLangs.contains(default)) default else "en")
 
-    override val language get() = settings.getStringOrNull(LANGUAGE_KEY)
     override fun setLanguage(language: String) =
-        settings.set(LANGUAGE_KEY, textAlignment.name)
+        settings.set(LANGUAGE_KEY, language)
 }
