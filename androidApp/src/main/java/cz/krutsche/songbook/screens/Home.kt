@@ -2,6 +2,7 @@ package cz.krutsche.songbook.screens
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,6 +19,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -35,6 +37,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import cz.krutsche.songbook.MR
 import cz.krutsche.songbook.SearchRepository
+import cz.krutsche.songbook.SettingsRepository
+import cz.krutsche.songbook.Theme
 import cz.krutsche.songbook.components.BottomBar
 import cz.krutsche.songbook.components.song.ListType
 import cz.krutsche.songbook.components.song.SongList
@@ -45,13 +49,18 @@ import org.koin.compose.koinInject
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 fun Home(navController: NavController) {
     var searchBarShown by remember { mutableStateOf(false) }
+    val modeSettings =
+        koinInject<SettingsRepository>().theme.collectAsState(initial = Theme.Auto).value
+    val darkTheme =
+        modeSettings == Theme.Dark || (modeSettings == Theme.Auto && isSystemInDarkTheme())
+    var modifier: Modifier = Modifier
+    if (!darkTheme) modifier = modifier.background(MaterialTheme.colors.primary)
 
     Scaffold(
         topBar = {
             Surface(elevation = 8.dp) {
                 Column(
-                    Modifier
-                        .background(MaterialTheme.colors.primary)
+                    modifier
                         .padding(horizontal = 8.dp, vertical = if (searchBarShown) 8.dp else 12.dp)
                         .fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -78,18 +87,16 @@ fun Home(navController: NavController) {
                                 Icon(
                                     Icons.Default.Search,
                                     contentDescription = null,
-                                    tint = MaterialTheme.colors.surface,
                                 )
                             },
                             modifier = Modifier
                                 .fillMaxWidth(1f)
                                 .focusRequester(focusRequester),
                             shape = RoundedCornerShape(8.dp),
-                            colors = TextFieldDefaults.outlinedTextFieldColors(
+                            colors = if (!darkTheme) TextFieldDefaults.outlinedTextFieldColors(
                                 backgroundColor = Color.White,
                                 focusedBorderColor = Color.Transparent,
-                                textColor = Color.Black,
-                            )
+                            ) else TextFieldDefaults.outlinedTextFieldColors()
                         )
 
                         LaunchedEffect(searchBarShown) {

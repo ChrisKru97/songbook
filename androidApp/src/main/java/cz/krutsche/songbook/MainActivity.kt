@@ -19,10 +19,17 @@ class MainActivity : ComponentActivity() {
         GlobalScope.async {
             koin.get<SettingsRepository>().language.collect {
                 if (it != null) {
-                    val locale = Locale(it)
-                    Locale.setDefault(locale)
-                    resources.configuration.setLocale(locale)
-                    resources.updateConfiguration(resources.configuration, resources.displayMetrics)
+                    try {
+                        val locale = Locale(it)
+                        Locale.setDefault(locale)
+                        resources.configuration.setLocale(locale)
+                        resources.updateConfiguration(
+                            resources.configuration,
+                            resources.displayMetrics
+                        )
+                        setTitle(MR.strings.app_title.resourceId)
+                    } catch (_: Exception) {
+                    }
                 }
             }
         }

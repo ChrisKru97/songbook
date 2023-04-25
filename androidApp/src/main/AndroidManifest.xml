@@ -9,7 +9,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:label="Worship songs"
+            android:label="@string/app_title"
             android:windowSoftInputMode="adjustResize"
             android:exported="true">
             <intent-filter>

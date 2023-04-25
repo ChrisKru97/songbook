@@ -14,9 +14,11 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Slider
 import androidx.compose.material.Switch
+import androidx.compose.material.SwitchDefaults
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
@@ -187,7 +189,10 @@ fun Settings(navController: NavController) {
                 ) {
                     Text(
                         stringResource(MR.strings.song_placeholder.resourceId),
-                        style = TextStyle(fontSize = fontSize.sp, color = Color.DarkGray),
+                        style = TextStyle(
+                            fontSize = fontSize.sp,
+                            color = MaterialTheme.colors.onBackground
+                        ),
                     )
                 }
             }
@@ -204,10 +209,15 @@ fun Settings(navController: NavController) {
                     stringResource(MR.strings.chords.resourceId),
                     style = style
                 )
-                Switch(checked = checked, onCheckedChange = {
-                    checked = !checked
-                    settingsRepository.setShowChords(checked)
-                })
+                Switch(
+                    checked = checked, onCheckedChange = {
+                        checked = !checked
+                        settingsRepository.setShowChords(checked)
+                    }, colors = SwitchDefaults.colors(
+                        checkedThumbColor = MaterialTheme.colors.primary,
+                        uncheckedThumbColor = Color.DarkGray
+                    )
+                )
             }
 
             Divider()

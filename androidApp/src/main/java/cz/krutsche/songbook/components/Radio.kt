@@ -11,7 +11,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -34,9 +33,17 @@ fun <T> Radio(
         options.forEach {
             val isSelected = selected == it.value
             Text(it.title,
-                style = TextStyle(color = Color.White, textAlign = TextAlign.Center, fontSize = 16.sp),
+                style = TextStyle(
+                    color = if (isSelected) MaterialTheme.colors.onPrimary else MaterialTheme.colors.onBackground,
+                    textAlign = TextAlign.Center,
+                    fontSize = 16.sp
+                ),
                 modifier = Modifier
-                    .background(if (isSelected) MaterialTheme.colors.primary.copy(0.7f) else MaterialTheme.colors.secondary.copy(0.8f))
+                    .background(
+                        if (isSelected) MaterialTheme.colors.primary else MaterialTheme.colors.primary.copy(
+                            0.1f
+                        )
+                    )
                     .clickable { onChange(it.value) }
                     .padding(12.dp)
                     .weight(1f)

@@ -13,6 +13,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Kesansk_zpvnk"
+rootProject.name = "Krestansky_zpevnik"
 include(":androidApp")
 include(":shared")
